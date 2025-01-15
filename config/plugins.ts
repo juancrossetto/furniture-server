@@ -4,6 +4,7 @@
 export default ({ env }) => ({
     upload: {
       config: {
+        jwtSecret: env('JWT_SECRET'),
         provider: "strapi-provider-upload-supabase",
         providerOptions: {
           apiUrl: env("SUPABASE_API_URL", "https://icspknzugbnnanbidolg.supabase.co"),
