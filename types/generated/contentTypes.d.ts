@@ -552,7 +552,6 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
   };
   attributes: {
     cover: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
