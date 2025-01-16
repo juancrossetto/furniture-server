@@ -1,27 +1,35 @@
-export default [
-  'strapi::logger',
+export default ({ env }) => [
   'strapi::errors',
-  'strapi::security',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:', 'http:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'res.cloudinary.com', // cloudinary images
+            'lh3.googleusercontent.com', // google avatars
+            'platform-lookaside.fbsbx.com', // facebook avatars
+            'dl.airtable.com', // strapi marketplace,
+            "market-assets.strapi.io",
+            env('SUPABASE_API_URL'),
+          ],
+          'media-src': ["'self'", 'data:', 'blob:', env('SUPABASE_API_URL')],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
   'strapi::cors',
   'strapi::poweredBy',
+  'strapi::logger',
   'strapi::query',
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
-  {
-    name: 'strapi::cors',
-    config: {
-      origin: ['*'], // Cambia '*' por los dominios de tu frontend si es necesario
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    },
-  },
-  {
-    name: 'strapi::body',
-    config: {
-      jsonLimit: '50mb', // Límite para JSON
-      formLimit: '50mb', // Límite para formularios
-      textLimit: '50mb', // Límite para texto
-    },
-  }
 ];
